@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hexaware.codingchallenge.dto.PlayerBasedID;
 import com.hexaware.codingchallenge.dto.PlayerDTO;
 import com.hexaware.codingchallenge.entity.Player;
 import com.hexaware.codingchallenge.exceptions.InvalidPlayerIDException;
@@ -23,24 +24,23 @@ public class PlayerServiceImpl implements IPlayerService {
 	}
 
 	@Override
-	public Player createNewPlayer(PlayerDTO playerDTO) {
+	public Player createNewPlayer(Player player) {
 		
-		Player newPlayer= new Player();
-		
-		newPlayer.setPlayerId(playerDTO.getPlayerId());
-		newPlayer.setPlayerName(playerDTO.getPlayerName());
-		newPlayer.setJerseyNumber(playerDTO.getJerseyNumber());
-		newPlayer.setRole(playerDTO.getRole());
-		newPlayer.setStateName(playerDTO.getStateName());
-		newPlayer.setTeamName(playerDTO.getTeamName());
-		newPlayer.setDescription(playerDTO.getDescription());
-		newPlayer.setTotalMatches(playerDTO.getTotalMatches());
+	Player newPlayer= new Player();		
+		newPlayer.setPlayerId(player.getPlayerId());
+		newPlayer.setPlayerName(player.getPlayerName());
+		newPlayer.setJerseyNumber(player.getJerseyNumber());
+		newPlayer.setRole(player.getRole());
+		newPlayer.setStateName(player.getStateName());
+		newPlayer.setTeamName(player.getTeamName());
+		newPlayer.setDescription(player.getDescription());
+		newPlayer.setTotalMatches(player.getTotalMatches());
 		
 		return playerRepository.save(newPlayer);
 	}
 
 	@Override
-	public Player updatePlayer(long playerId,PlayerDTO playerDTO) throws InvalidPlayerIDException {
+	public Player updatePlayer(long playerId,Player player) throws InvalidPlayerIDException {
 		
 		Player updatePlayer=playerRepository.findById(playerId).orElse(null);
 		
@@ -49,38 +49,42 @@ public class PlayerServiceImpl implements IPlayerService {
 			throw new InvalidPlayerIDException();
 		}
 		
-		updatePlayer.setPlayerId(playerDTO.getPlayerId());
-		updatePlayer.setPlayerName(playerDTO.getPlayerName());
-		updatePlayer.setStateName(playerDTO.getStateName());
-		updatePlayer.setTeamName(playerDTO.getTeamName());
-		updatePlayer.setDescription(playerDTO.getDescription());
-		updatePlayer.setTotalMatches(playerDTO.getTotalMatches());
-		updatePlayer.setJerseyNumber(playerDTO.getJerseyNumber());
-		updatePlayer.setRole(playerDTO.getRole());
+		updatePlayer.setPlayerId(player.getPlayerId());
+		updatePlayer.setPlayerName(player.getPlayerName());
+		updatePlayer.setStateName(player.getStateName());
+		updatePlayer.setTeamName(player.getTeamName());
+		updatePlayer.setDescription(player.getDescription());
+		updatePlayer.setTotalMatches(player.getTotalMatches());
+		updatePlayer.setJerseyNumber(player.getJerseyNumber());
+		updatePlayer.setRole(player.getRole());
 		
 		return playerRepository.save(updatePlayer);
 	}
 
 	@Override
-	public String deletePlayerById(long playerId) {
-		
-		   
-		playerRepository.deleteById(playerId);
+	public String deletePlayerById(long playerId) throws InvalidPlayerIDException {
 		
 		Player deletedPlayer=playerRepository.findById(playerId).orElse(null);
 		
 		if(deletedPlayer==null)
 		{
-			return "Player Deleted Succesfully";
+			throw new InvalidPlayerIDException();
 		}
 		
-		return "";
+		playerRepository.deleteById(playerId);
+		
+		return "Player Deleted Succesfully";
 	}
 
 	@Override
 	public Player getPlayerById(long playerId) {
 		
 		return playerRepository.findById(playerId).orElse(null);
+	}
+
+	@Override
+	public PlayerDTO getSpecificPropertyBasedID(long playerId) {
+	    return playerRepository.getSpecificPropertyBasedID(playerId);
 	}
 
 }

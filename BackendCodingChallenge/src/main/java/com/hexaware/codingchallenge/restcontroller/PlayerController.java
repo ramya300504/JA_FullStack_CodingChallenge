@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hexaware.codingchallenge.dto.PlayerBasedID;
 import com.hexaware.codingchallenge.dto.PlayerDTO;
 import com.hexaware.codingchallenge.entity.Player;
 import com.hexaware.codingchallenge.exceptions.InvalidPlayerIDException;
-import com.hexaware.codingchallenge.service.IPlayerService;
 import com.hexaware.codingchallenge.service.PlayerServiceImpl;
 
 import jakarta.validation.Valid;
@@ -35,22 +35,28 @@ public class PlayerController {
 	}
 	
 	@PostMapping("/players")
-	public Player createNewPlayer(@Valid @RequestBody PlayerDTO playerDTO) 
+	public Player createNewPlayer(@Valid @RequestBody Player player) 
 	{
 		
-		return playerService.createNewPlayer(playerDTO);
+		return playerService.createNewPlayer(player);
 	}
 	
 	@PutMapping("/players/{playerId}")
-	public Player updatePlayer(@PathVariable long playerId,@Valid @RequestBody PlayerDTO playerDTO) throws InvalidPlayerIDException {
+	public Player updatePlayer(@PathVariable long playerId,@Valid @RequestBody Player player) throws InvalidPlayerIDException
+	{
 		
-		return playerService.updatePlayer(playerId,playerDTO);
+		return playerService.updatePlayer(playerId,player);
 		
 	}
 	
+	@GetMapping("/specificproperty/{playerId}")
+	public PlayerDTO getSpecificPropertyBasedID(@PathVariable long playerId) {
+		
+		return playerService.getSpecificPropertyBasedID(playerId);
+	}
 	
 	@DeleteMapping("/players/{playerId}")
-	public String deletePlayerById(@PathVariable long playerId) {
+	public String deletePlayerById(@PathVariable long playerId) throws InvalidPlayerIDException {
 		
 		return playerService.deletePlayerById(playerId);
 	}

@@ -17,7 +17,7 @@ public class Player {
 	
 	
 	@Column(name="player_name")
-	@Pattern(regexp = "^[A-Z][a-z ]{1,29}$", message = "Player name must start with uppercase and contain only lowercase letters and spaces")
+	@Pattern(regexp = "^[A-Za-z ]{1,30}$", message = "Player name must contain only letters and spaces, and be 1 to 30 characters")
 	private String playerName;
 	
 	@Column(name="jersey_number")
@@ -31,17 +31,10 @@ public class Player {
 	
 	private int totalMatches;
 	
-	@Pattern(
-		    regexp = "^(Chennai Super Kings|Mumbai Indians|Royal Challengers Bangalore|Kolkata Knight Riders|Delhi Capitals|Rajasthan Royals|Punjab Kings|Lucknow Super Giants|Sunrisers Hyderabad|Gujarat Titans)$",
-		    message = "Team name must be a valid IPL team"
-		)
+	
 	@Column(name="team_name")
 	private String teamName;
 	
-	@Pattern(
-		    regexp = "^(Tamil Nadu|Maharashtra|Karnataka|Delhi|Rajasthan|Punjab|Gujarat)$",
-		    message = "State name must be a valid IPL team region"
-		)
 	@Column(name="state_name")
 	private String stateName;
 	
