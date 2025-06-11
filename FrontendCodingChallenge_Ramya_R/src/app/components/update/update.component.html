@@ -1,0 +1,83 @@
+
+<form #playerForm="ngForm" method="put" class="container col-md-4 mt-4" (ngSubmit)="updatePlayer(playerForm.value)">
+
+  <div class="form-group mb-3">
+    <label>Player ID:</label>
+    <input type="number" class="form-control" name="playerId" required
+      [(ngModel)]="player.playerId" #idCtrl="ngModel" min="1" max="100" />
+    <span class="text-danger" *ngIf="idCtrl.touched && idCtrl.invalid">
+      Player ID should be from 1 to 100
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Player Name:</label>
+    <input type="text" class="form-control" name="playerName" required
+      [(ngModel)]="player.playerName" #nameCtrl="ngModel" pattern="^[A-Za-z ]{1,30}$" />
+    <span class="text-danger" *ngIf="nameCtrl.touched && nameCtrl.invalid">
+      Player Name must contain only letters and spaces (1–30 chars)
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Jersey Number:</label>
+    <input type="number" class="form-control" name="jerseyNumber" required
+      [(ngModel)]="player.jerseyNumber" #jerseyCtrl="ngModel" min="1" max="999" />
+    <span class="text-danger" *ngIf="jerseyCtrl.touched && jerseyCtrl.invalid">
+      Jersey Number must be between 1 and 999
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Role:</label>
+    <select class="form-control" name="role" required
+      [(ngModel)]="player.role" #roleCtrl="ngModel">
+      <option value="" disabled>Select Role</option>
+      <option value="Batsman">Batsman</option>
+      <option value="Bowler">Bowler</option>
+      <option value="Keeper">Keeper</option>
+      <option value="All Rounder">All Rounder</option>
+    </select>
+    <span class="text-danger" *ngIf="roleCtrl.touched && roleCtrl.invalid">
+      Please select a valid role
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Total Matches:</label>
+    <input type="number" class="form-control" name="totalMatches" required
+      [(ngModel)]="player.totalMatches" #matchCtrl="ngModel" min="0" />
+    <span class="text-danger" *ngIf="matchCtrl.touched && matchCtrl.invalid">
+      Total Matches is required and must be a number
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Team Name:</label>
+    <input type="text" class="form-control" name="teamName" required
+      [(ngModel)]="player.teamName" #teamCtrl="ngModel" />
+    <span class="text-danger" *ngIf="teamCtrl.touched && teamCtrl.invalid">
+      Team Name is required
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>State Name:</label>
+    <input type="text" class="form-control" name="stateName" required
+      [(ngModel)]="player.stateName" #stateCtrl="ngModel" />
+    <span class="text-danger" *ngIf="stateCtrl.touched && stateCtrl.invalid">
+      State Name is required
+    </span>
+  </div>
+
+  <div class="form-group mb-3">
+    <label>Description:</label>
+    <textarea class="form-control" rows="3" name="description"
+      [(ngModel)]="player.description"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="playerForm.invalid">
+    Update Player
+  </button>
+
+</form>

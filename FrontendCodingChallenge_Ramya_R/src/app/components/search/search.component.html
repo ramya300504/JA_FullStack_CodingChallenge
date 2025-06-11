@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <table class="table table-bordered table-striped table-hover">
+   
+      <tr>
+        <th>Player ID</th>
+        <th>Player Name</th>
+        <th>Jersey Number</th>
+        <th>Team Name</th>
+        <th>State Name</th>
+        <th>Total Matches</th>
+        <th>Role</th>
+        <th>Description</th>
+        <th>Delete Player</th>
+      </tr>
+      <tr *ngIf="player">
+        <td>{{ player.playerId }}</td>
+        <td>{{ player.playerName }}</td>
+        <td>{{player.jerseyNumber}}</td>
+        <td>{{ player.teamName }}</td>
+        <td>{{ player.stateName }}</td>
+        <td>{{ player.totalMatches }}</td>
+        <td>{{ player.role }}</td>
+        <td>{{ player.description }}</td>
+        <td><button type="button" (click)="deleteById(player.playerId)"  class="btn btn-danger" rou>Delete</button></td>
+      </tr>  
+  </table>
+
+  <div *ngIf="!player">
+    <p class="text-danger">No player found for given ID</p>
+  </div>
+</div>
+
+
